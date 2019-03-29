@@ -22,3 +22,11 @@ Recommendation:
 * [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 * [Helm](https://github.com/helm/helm)
+
+## On Mac OS
+
+1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+2. Open your terminal, and execute `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"` to install Homebrew.
+3. Open your terminal, and execute `brew install kubernetes-cli` to install `kubectl`.
+4. Open your terminal, and execute `brew cask install minikube` to install `minikube`.
+5. Open your terminal, and execute `brew install kubernetes-helm` to install `helm`.
