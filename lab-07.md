@@ -3,7 +3,7 @@
 ## Check metrics
 
 ```
-$ kubectl top nodes
+kubectl top nodes
 ```
 
 Output
@@ -15,7 +15,7 @@ Error from server (NotFound): the server could not find the requested resource (
 ## Enable metrics-server
 
 ```
-$ minikube addons list
+minikube addons list
 ```
 
 Output
@@ -40,7 +40,7 @@ Output
 ```
 
 ```
-$ minikube addons enable metrics-server
+minikube addons enable metrics-server
 ```
 
 Output
@@ -52,13 +52,13 @@ Output
 Confirm the metrics-server pod is running
 
 ```
-$ kubectl get pods --all-namespaces -w
+kubectl get pods --all-namespaces -w
 ```
 
 Wait a minute...
 
 ```
-$ kubectl top nodes
+kubectl top nodes
 ```
 
 ```
@@ -75,29 +75,29 @@ kubectl top po --all-namespaces
 __Install Helm__
 
 ```
-$ brew install kubernetes-helm
+brew install kubernetes-helm
 ```
 
 ```
-$ helm init
+helm init
 ```
 
 Add CoreOS Helm repository
 
 ```
-$ helm install stable/prometheus-operator --name prometheus-operator --namespace monitoring
+helm install stable/prometheus-operator --name prometheus-operator --namespace monitoring
 ```
 
 Check operator
 
 ```
-$ kubectl get pods -n monitoring
+kubectl get pods -n monitoring
 ```
 
 Proxy
 
 ```
-$ kubectl port-forward -n monitoring svc/prometheus-operator-grafana 8080:80
+kubectl port-forward -n monitoring svc/prometheus-operator-grafana 8080:80
 ```
 
 Browse http://localhost:8080
@@ -112,10 +112,10 @@ Password: prom-operator
 ## Clear
 
 ```
-$ helm delete prometheus-operator
-$ kubectl delete crd prometheuses.monitoring.coreos.com
-$ kubectl delete crd prometheusrules.monitoring.coreos.com
-$ kubectl delete crd servicemonitors.monitoring.coreos.com
-$ kubectl delete crd alertmanagers.monitoring.coreos.com
-$ kubectl delete namespace monitoring
+helm delete prometheus-operator
+kubectl delete crd prometheuses.monitoring.coreos.com
+kubectl delete crd prometheusrules.monitoring.coreos.com
+kubectl delete crd servicemonitors.monitoring.coreos.com
+kubectl delete crd alertmanagers.monitoring.coreos.com
+kubectl delete namespace monitoring
 ```
