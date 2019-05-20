@@ -1,7 +1,7 @@
 # Lab 08 - Logging
 
 ```
-$ kubectl run --dry-run busybox --image=busybox:1.28 \
+kubectl run --dry-run busybox --image=busybox:1.28 \
   --restart=Never -o yaml > log.yaml
 ```
 
@@ -32,29 +32,29 @@ status: {}
 ```
 
 ```
-$ kubectl logs -f busybox
+kubectl logs -f busybox
 ```
 
 ## See log on Minikube
 
 ```
-$ minikube ssh
+minikube ssh
 ```
 
 ```
-$ ls /var/log/container
+ls /var/log/container
 ```
 
 ```
-$ sudo tail /var/log/container/CONTAINER_LOG
+sudo tail /var/log/container/CONTAINER_LOG
 ```
 
 ```
-$ exit
+exit
 ```
 
 ## Clear
 
 ```
-$ kubectl delete pod busybox
+kubectl delete pod busybox
 ```
