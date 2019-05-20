@@ -3,19 +3,19 @@
 ## Show Deployment
 
 ```
-$ kubectl get deployment
+kubectl get deployment
 ```
 
 __In short__
 
 ```
-$ kubectl get deploy
+kubectl get deploy
 ```
 
 ## Create a Deployment with command
 
 ```
-$ kubectl run nginx --image=nginx
+kubectl run nginx --image=nginx
 ```
 
 Output
@@ -27,7 +27,7 @@ deployment.apps/nginx created
 __Inspect__
 
 ```
-$ kubectl get deployments
+kubectl get deployments
 ```
 
 Output
@@ -38,7 +38,7 @@ nginx     1         1         1            1           2m
 ```
 
 ```
-$ kubectl get replicasets
+kubectl get replicasets
 ```
 
 Output
@@ -49,7 +49,7 @@ nginx-64f497f8fd   1         1         1         2m
 ```
 
 ```
-$ kubectl get pods
+kubectl get pods
 ```
 
 Output
@@ -62,7 +62,7 @@ nginx-64f497f8fd-5d9s7   1/1       Running   0          2m
 ## Generate YAML template with command
 
 ```
-$ kubectl run nginx --dry-run --image=nginx -o yaml
+kubectl run nginx --dry-run --image=nginx -o yaml
 ```
 
 Output
@@ -99,25 +99,25 @@ status: {}
 __Open three terminal to watch changes__
 
 ```
-$ kubectl get deployments -w
+kubectl get deployments -w
 ```
 
 ```
-$ kubectl get replicasets -w
+kubectl get replicasets -w
 ```
 
 ```
-$ kubectl get pods -w
+kubectl get pods -w
 ```
 
 Delte the pod
 
 ```
-$ kubectl delete pod $(kubectl get po -o jsonpath='{.items[0].metadata.name}')
+kubectl delete pod $(kubectl get po -o jsonpath='{.items[0].metadata.name}')
 ```
 
 ## Clear
 
 ```
-$ kubectl delete deployment nginx
+kubectl delete deployment nginx
 ```
