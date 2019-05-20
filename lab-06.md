@@ -1,4 +1,4 @@
-# Lab - Label and annotation
+# Lab 06 - Label and annotation
 
 ## Show labels
 

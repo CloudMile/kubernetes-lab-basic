@@ -1,4 +1,4 @@
-# Lab - Service Introduction
+# Lab 04 - Service Introduction
 
 ## Create a deployment
 

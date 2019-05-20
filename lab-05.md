@@ -1,4 +1,4 @@
-# Lab - ConfigMap and Secret
+# Lab 05 - ConfigMap and Secret
 
 ## Create ConfigMaps
 

@@ -1,4 +1,4 @@
-# Lab - Browse Minikube resource
+# Lab 01 - Browse Minikube resource
 
 ## Setup Minikube completion(Bash)
 
@@ -24,7 +24,6 @@ minikube version: v0.35.0
 
 ```
 $ minikube config get kubernetes-version
-$ minikube config set kubernetes-version v1.11.1
 ```
 
 ## Start Minikube

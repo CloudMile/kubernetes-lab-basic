@@ -1,4 +1,4 @@
-# Lab - Monitoring
+# Lab 07 - Monitoring
 
 ## Check metrics
 

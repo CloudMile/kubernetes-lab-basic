@@ -1,4 +1,4 @@
-# Lab - Logging
+# Lab 08 - Logging
 
 ```
 $ kubectl run --dry-run busybox --image=busybox:1.28 \

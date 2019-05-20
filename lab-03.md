@@ -1,4 +1,4 @@
-# Lab - Deployment Introduction
+# Lab 03 - Deployment Introduction
 
 ## Show Deployment
 

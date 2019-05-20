@@ -2,15 +2,15 @@
 
 ## Lab List
 
-* [Lab - Browse Minikube resource](lab-01.md)
-* [Lab - Pod Introduction](lab-02.md)
-* [Lab - Deployment Introduction](lab-03.md)
-* [Lab - Service Introduction](lab-04.md)
-* [Lab - ConfigMap and Secret](lab-05.md)
-* [Lab - Label and annotation](lab-06.md)
-* [Lab - Monitoring](lab-07.md)
-* [Lab - Logging](lab-08.md)
-* [Lab - Update Version](lab-09.md)
+* [Lab 01 - Browse Minikube resource](lab-01.md)
+* [Lab 02 - Pod Introduction](lab-02.md)
+* [Lab 03 - Deployment Introduction](lab-03.md)
+* [Lab 04 - Service Introduction](lab-04.md)
+* [Lab 05 - ConfigMap and Secret](lab-05.md)
+* [Lab 06 - Label and annotation](lab-06.md)
+* [Lab 07 - Monitoring](lab-07.md)
+* [Lab 08 - Logging](lab-08.md)
+* [Lab 09 - Update Version](lab-09.md)
 
 ## Requirement
 
@@ -56,7 +56,7 @@ Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v1.
 3. Download and install [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/). Execute:
 
 ```
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;
 Invoke-WebRequest "https://github.com/kubernetes/minikube/releases/download/v1.0.1/minikube-installer.exe" -OutFile C:\minikube-installer.exe;
 C:\minikube-installer.exe;
 ```

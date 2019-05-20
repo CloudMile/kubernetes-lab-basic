@@ -1,4 +1,4 @@
-# Lab - Pod Introduction
+# Lab 02 - Pod Introduction
 
 ## Show Namespace
 

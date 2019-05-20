@@ -1,4 +1,4 @@
-# Lab - Update Version
+# Lab 09 - Update Version
 
 ```
 $ kubectl run nginx --image=nginx:1.7.9
