@@ -53,7 +53,7 @@ C:\virtualbox.exe;
 Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/windows/amd64/kubectl.exe" -OutFile C:\Windows\system32\kubectl.exe;
 ```
 
-3. Download and install [Minukube](https://kubernetes.io/docs/tasks/tools/install-minikube/). Execute:
+3. Download and install [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/). Execute:
 
 ```
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
