@@ -3,51 +3,53 @@
 ## Setup Minikube completion(Bash)
 
 ```
-$ minikube completion bash > ~/.minikube-completion
-$ echo 'source ~/.minikube-completion' >> ~/.bash_profile
-$ exec -l $SHELL
+minikube completion bash > ~/.minikube-completion
+echo 'source ~/.minikube-completion' >> ~/.bash_profile
+exec -l $SHELL
 ```
 
 ## Show Minikube version
 
 ```
-$ minikube version
+minikube version
 ```
 
 Output
 
 ```
-minikube version: v0.35.0
+minikube version: v1.0.1
 ```
 
 ## Check the kuberentes version
 
 ```
-$ minikube config get kubernetes-version
+minikube config get kubernetes-version
 ```
 
 ## Start Minikube
 
 ```
-$ minikube start
+minikube start
 ```
 
 Output
 
 ```
-😄  minikube v0.35.0 on darwin (amd64)
-💥  Kubernetes downgrade is not supported, will continue to use v1.11.1
+😄  minikube v1.0.1 on darwin (amd64)
+🤹  Downloading Kubernetes v1.14.1 images in the background ...
 💡  Tip: Use 'minikube start -p <name>' to create a new cluster, or 'minikube delete' to delete this one.
 🔄  Restarting existing virtualbox VM for "minikube" ...
 ⌛  Waiting for SSH access ...
 📶  "minikube" IP address is 192.168.99.100
 🐳  Configuring Docker as the container runtime ...
+🐳  Version of container runtime is 18.06.3-ce
+⌛  Waiting for image downloads to complete ...
 ✨  Preparing Kubernetes environment ...
-🚜  Pulling images required by Kubernetes v1.11.1 ...
-🔄  Relaunching Kubernetes v1.11.1 using kubeadm ...
-⌛  Waiting for pods: apiserver proxy etcd scheduler controller addon-manager dns
+🚜  Pulling images required by Kubernetes v1.14.1 ...
+🔄  Relaunching Kubernetes v1.14.1 using kubeadm ...
+⌛  Waiting for pods: apiserver proxy etcd scheduler controller dns
 📯  Updating kube-proxy configuration ...
-🤔  Verifying component health .....
+🤔  Verifying component health ......
 💗  kubectl is now configured to use "minikube"
 🏄  Done! Thank you for using minikube!
 ```
@@ -55,7 +57,7 @@ Output
 ## Show Minikube status
 
 ```
-$ minikube status
+minikube status
 ```
 
 Output
@@ -69,7 +71,7 @@ kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100
 ## Show Minikube Node IP
 
 ```
-$ minikube ip
+minikube ip
 ```
 
 Output
@@ -81,13 +83,13 @@ Output
 Ping test
 
 ```
-$ ping $(minikube ip)
+ping $(minikube ip)
 ```
 
 ## Show Minikube addons
 
 ```
-$ minikube addons list
+minikube addons list
 ```
 
 Output
@@ -114,7 +116,7 @@ Output
 ## Delete Cluster
 
 ```
-$ minikube delete
+minikube delete
 ```
 
 ----
@@ -122,7 +124,7 @@ $ minikube delete
 ## Check kubectl context
 
 ```
-$ kubectl config current-context
+kubectl config current-context
 ```
 
 Output
@@ -134,7 +136,7 @@ minikube
 __Show the cluster information of curreent context__
 
 ```
-$ kubectl cluster-info
+kubectl cluster-info
 ```
 
 Output
@@ -147,19 +149,19 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
 
 ```
-$ kubectl config current-context
+kubectl config current-context
 ```
 
 __Show all context__
 
 ```
-$ kubectl config get-contexts
+kubectl config get-contexts
 ```
 
 __Set a new context__
 
 ```
-$ kubectl config set-context mini-system \
+kubectl config set-context mini-system \
   --cluster=minikube \
   --user=minikube \
   --namespace=kube-system
@@ -168,15 +170,15 @@ $ kubectl config set-context mini-system \
 __Set current context__
 
 ```
-$ kubectl config use-context mini-system
+kubectl config use-context mini-system
 ```
 
 ```
-$ kubectl config current-context
+kubectl config current-context
 ```
 
 ```
-$ kubectl config delete-context mini-system
+kubectl config delete-context mini-system
 ```
 
 ## Kubectx
@@ -184,7 +186,7 @@ $ kubectl config delete-context mini-system
 Install [kubnectx](https://github.com/ahmetb/kubectx).
 
 ```
-$ kubectx
+kubectx
 ```
 
 ----
@@ -192,29 +194,29 @@ $ kubectx
 ## Show Nodes
 
 ```
-$ kubectl get nodes
+kubectl get nodes
 ```
 
 __In short__
 
 ```
-$ kubectl get no
+kubectl get no
 ```
 
 __More Information__
 
 ```
-$ kubectl get nodes -o wide
+kubectl get nodes -o wide
 ```
 
 __Detail__
 
 ```
-$ kubectl describe nodes
+kubectl describe nodes
 ```
 
 __Field explain__
 
 ```
-$ kubectl explain nodes
+kubectl explain nodes
 ```
