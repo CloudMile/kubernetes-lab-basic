@@ -3,25 +3,25 @@
 ## Create ConfigMaps
 
 ```
-$ kubectl create configmap dummy-config --from-literal=foo=bar
+kubectl create configmap dummy-config --from-literal=foo=bar
 ```
 
 ## Show ConfigMaps
 
 ```
-$ kubectl get configmaps
+kubectl get configmaps
 ```
 
 __In short__
 
 ```
-$ kubectl get cm
+kubectl get cm
 ```
 
 __Inspet__
 
 ```
-$ kubectl describe configmaps dummy-config
+kubectl describe configmaps dummy-config
 ```
 
 Output
@@ -43,18 +43,18 @@ Events:  <none>
 ## Create ConfigMaps with multi values
 
 ```
-$ kubectl delete configmap dummy-config
+kubectl delete configmap dummy-config
 ```
 
 ```
-$ kubectl create configmap dummy-config \
+kubectl create configmap dummy-config \
   --from-literal=k1=value1 \
   --from-literal=k2=value2 \
   --from-literal=k3=value3
 ```
 
 ```
-$ kubectl describe configmaps dummy-config
+kubectl describe configmaps dummy-config
 ```
 
 Output
@@ -82,19 +82,19 @@ Events:  <none>
 ## Create ConfigMaps with file
 
 ```
-$ kubectl delete configmap dummy-config
+kubectl delete configmap dummy-config
 ```
 
 ```
-$ echo 'hello world' > welcome.txt
+echo 'hello world' > welcome.txt
 ```
 
 ```
-$ kubectl create configmap dummy-config --from-file=welcome.txt
+kubectl create configmap dummy-config --from-file=welcome.txt
 ```
 
 ```
-$ kubectl describe configmaps dummy-config
+kubectl describe configmaps dummy-config
 ```
 
 Output
@@ -117,11 +117,11 @@ Events:  <none>
 ## Generate YAML template with command
 
 ```
-$ kubectl delete configmap dummy-config
+kubectl delete configmap dummy-config
 ```
 
 ```
-$ kubectl create --dry-run configmap dummy-config \
+kubectl create --dry-run configmap dummy-config \
   --from-literal=foo=bar -o yaml > configmap.yaml
 ```
 
@@ -138,11 +138,11 @@ metadata:
 ```
 
 ```
-$ kubectl create -f configmap.yaml
+kubectl create -f configmap.yaml
 ```
 
 ```
-$ kubectl describe configmaps dummy-config
+kubectl describe configmaps dummy-config
 ```
 
 Output
@@ -165,7 +165,7 @@ Events:  <none>
 ## Use configmap as environment variable
 
 ```
-$ kubectl run --dry-run busybox --image=busybox:1.28 --restart=Never -o yaml > env.yaml
+kubectl run --dry-run busybox --image=busybox:1.28 --restart=Never -o yaml > env.yaml
 ```
 
 Edit `env.yaml`
@@ -200,15 +200,15 @@ status: {}
 ```
 
 ```
-$ kubectl create -f env.yaml
+kubectl create -f env.yaml
 ```
 
 ```
-$ kubectl exec busybox env
+kubectl exec busybox env
 ```
 
 ```
-$ kubectl delete -f env.yaml
+kubectl delete -f env.yaml
 ```
 
 ----
@@ -216,17 +216,17 @@ $ kubectl delete -f env.yaml
 ## Create Secret
 
 ```
-$ kubectl create secret generic dummy-secret --from-literal=foo=bar
+kubectl create secret generic dummy-secret --from-literal=foo=bar
 ```
 
 ## Show Secret
 
 ```
-$ kubectl get secrets
+kubectl get secrets
 ```
 
 ```
-$ kubectl describe secrets dummy-secret
+kubectl describe secrets dummy-secret
 ```
 
 Output
@@ -247,7 +247,7 @@ foo:  3 bytes
 ## Get Secret value
 
 ```
-$ kubectl get secrets dummy-secret -o yaml
+kubectl get secrets dummy-secret -o yaml
 ```
 
 Output
@@ -268,7 +268,7 @@ type: Opaque
 ```
 
 ```
-$ echo -n "YmFy" | base64 -D
+echo -n "YmFy" | base64 -D
 ```
 
 Output
@@ -306,11 +306,11 @@ type: Opaque
 __Create secret__
 
 ```
-$ kubectl apply -f secret.yaml
+kubectl apply -f secret.yaml
 ```
 
 ```
-$ kubectl describe secret dummy-secret
+kubectl describe secret dummy-secret
 ```
 
 Output
@@ -362,19 +362,19 @@ status: {}
 ```
 
 ```
-$ kubectl create -f env.yaml
+kubectl create -f env.yaml
 ```
 
 ```
-$ kubectl exec busybox env
+kubectl exec busybox env
 ```
 
 ```
-$ kubectl delete -f env.yaml
+kubectl delete -f env.yaml
 ```
 
 ## Clear
 
 ```
-$ kubectl delete secret dummy-secret
+kubectl delete secret dummy-secret
 ```
