@@ -20,12 +20,6 @@ Output
 minikube version: v1.0.1
 ```
 
-## Check the kuberentes version
-
-```
-minikube config get kubernetes-version
-```
-
 ## Start Minikube
 
 ```
