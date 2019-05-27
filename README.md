@@ -38,13 +38,18 @@ Recommendation:
 
 ## On Windows
 
-Open Powershell as Administrator.
+Open Powershell as Administrator. And execute:
+
+```
+cd $env:userprofile
+```
 
 1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads). Execute:
 
 ```
-Invoke-WebRequest "https://download.virtualbox.org/virtualbox/6.0.8/VirtualBox-6.0.8-130520-Win.exe" -OutFile C:\virtualbox.exe;
-C:\virtualbox.exe;
+Invoke-WebRequest "https://download.virtualbox.org/virtualbox/6.0.8/VirtualBox-6.0.8-130520-Win.exe" -OutFile virtualbox.exe;
+
+.\virtualbox.exe;
 ```
 
 2. Download and install kubectl. Execute:
@@ -57,8 +62,9 @@ Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v1.
 
 ```
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;
-Invoke-WebRequest "https://github.com/kubernetes/minikube/releases/download/v1.0.1/minikube-installer.exe" -OutFile C:\minikube-installer.exe;
-C:\minikube-installer.exe;
+Invoke-WebRequest "https://github.com/kubernetes/minikube/releases/download/v1.0.1/minikube-installer.exe" -OutFile minikube-installer.exe;
+
+.\minikube-installer.exe;
 ```
 
 4. Download and install [Helm](https://helm.sh/docs/using_helm/#installing-helm). Execute:
@@ -66,17 +72,19 @@ C:\minikube-installer.exe;
 ```
 $version="helm-v2.14.0-windows-amd64";
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;
-Invoke-WebRequest "https://storage.googleapis.com/kubernetes-helm/$version.zip" -OutFile C:\$version.zip;
-Expand-Archive -Path C:\$version.zip -DestinationPath C:\$version;
+Invoke-WebRequest "https://storage.googleapis.com/kubernetes-helm/$version.zip" -OutFile "$version.zip";
+Expand-Archive -Path ".\$version.zip" -DestinationPath ".\$version";
 
-Move-Item -Path C:\$version\windows-amd64\helm.exe -Destination C:\Windows\system32\helm.exe;
-Move-Item -Path C:\$version\windows-amd64\tiller.exe -Destination C:\Windows\system32\tiller.exe;
+Move-Item -Path ".\$version\windows-amd64\helm.exe" -Destination C:\Windows\system32\helm.exe;
+Move-Item -Path ".\$version\windows-amd64\tiller.exe" -Destination C:\Windows\system32\tiller.exe;
 ```
 
-5. Remove all installation files under `C:\`.
+5. Remove all installation files. Execute:
 
-* `C:\virtualbox.exe`
-* `C:\minikube-installer.exe`
-* `C:\helm-*`
+```
+Remove-Item .\virtualbox.exe
+Remove-Item .\minikube-installer.exe
+Remove-Item .\helm-* -Recurse -Force
+```
 
 Recommendation Browser: Chrome
