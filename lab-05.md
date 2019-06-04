@@ -121,11 +121,11 @@ kubectl delete configmap dummy-config
 ```
 
 ```
-kubectl create --dry-run configmap dummy-config \
-  --from-literal=foo=bar -o yaml > configmap.yaml
+kubectl create configmap dummy-config --from-file=welcome.txt \
+  --dry-run -o yaml > configmap.yaml
 ```
 
-Edit `configmap.yaml`
+Show `configmap.yaml`
 ```
 apiVersion: v1
 data:
@@ -165,7 +165,7 @@ Events:  <none>
 ## Use configmap as environment variable
 
 ```
-kubectl run --dry-run busybox --image=busybox:1.28 --restart=Never -o yaml > env.yaml
+kubectl run busybox --image=busybox:1.28 --restart=Never --dry-run -o yaml > env.yaml
 ```
 
 Edit `env.yaml`
@@ -300,7 +300,6 @@ data:
 kind: Secret
 metadata:
   name: dummy-secret
-type: Opaque
 ```
 
 __Create secret__
