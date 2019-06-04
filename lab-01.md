@@ -96,7 +96,7 @@ Output
 - freshpod: disabled
 - gvisor: disabled
 - heapster: disabled
-- ingress: enabled
+- ingress: disabled
 - logviewer: disabled
 - metrics-server: disabled
 - nvidia-driver-installer: disabled
@@ -152,6 +152,14 @@ __Show all context__
 kubectl config get-contexts
 ```
 
+All available contexts are record in `~/.kube/config`.
+
+Show pods in current context.
+
+```
+kubectl get pods
+```
+
 __Set a new context__
 
 ```
@@ -171,6 +179,12 @@ kubectl config use-context mini-system
 kubectl config current-context
 ```
 
+Show pods in current context.
+
+```
+kubectl get pods
+```
+
 ```
 kubectl config delete-context mini-system
 ```
@@ -182,6 +196,20 @@ Install [kubnectx](https://github.com/ahmetb/kubectx).
 ```
 kubectx
 ```
+
+## K9s
+
+A greate terminal UI for Kubernetes
+
+[GitHub Repository](https://github.com/derailed/k9s)
+
+__Start__
+
+```
+k9s
+```
+
+![](img/lab-01-k9s.png)
 
 ----
 
