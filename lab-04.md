@@ -3,13 +3,13 @@
 ## Create a deployment
 
 ```
-kubectl run nginx --image=nginx --port=80
+kubectl run nginx --image=nginx
 ```
 
 ## Create a service for deployment
 
 ```
-kubectl expose deployment nginx
+kubectl expose deployment nginx --port=80
 ```
 
 Output
@@ -67,7 +67,7 @@ nginx        172.17.0.7:80         6m
 ## Generate YAML template with command
 
 ```
-kubectl expose --dry-run deployment nginx --name=nginx-svc -o yaml > svc.yaml
+kubectl expose deployment nginx --port=80 --name=nginx-svc --dry-run -o yaml > svc.yaml
 ```
 
 ```
@@ -79,6 +79,15 @@ kubectl create -f svc.yaml
 ```
 kubectl port-forward service/nginx-svc 8080:80
 ```
+
+Output
+
+```
+Forwarding from 127.0.0.1:8080 -> 80
+Forwarding from [::1]:8080 -> 80
+```
+
+Open browser: http://127.0.0.1:8080/
 
 ## NodePort Type
 
@@ -93,7 +102,7 @@ metadata:
     run: nginx
   name: nginx-svc
 spec:
-  type: NodePort
+  type: NodePort # change here
   ports:
   - port: 80
     protocol: TCP
@@ -123,7 +132,9 @@ nginx-svc    NodePort    10.107.140.99   <none>        80:32630/TCP   5m
 __Test Node port access__
 
 ```
-curl $(minikube ip):32630
+SVC_NODEPORT=$(kubectl get svc nginx-svc -o jsonpath='{.spec.ports[0].nodePort}')
+
+curl $(minikube ip):${SVC_NODEPORT}
 ```
 
 ## Specfic the NodePort
@@ -144,7 +155,7 @@ spec:
   - port: 80
     protocol: TCP
     targetPort: 80
-    nodePort: 32123
+    nodePort: 32123 # change here
   selector:
     run: nginx
 status:
@@ -174,7 +185,7 @@ kubectl run busybox --image=busybox:1.28 --restart=Never -- sleep 3600
 ```
 
 ```
-kubectl exec busybox -- nslookup kubernete
+kubectl exec busybox -- nslookup kubernetes
 ```
 
 ## Headless Service
@@ -190,7 +201,7 @@ metadata:
     run: nginx
   name: nginx-svc
 spec:
-  clusterIP: None
+  clusterIP: None # change it
   ports:
   - port: 80
     protocol: TCP
@@ -279,6 +290,28 @@ nginx-svc    ClusterIP   10.100.94.111   <none>        80/TCP    4s
 Check Endpoints
 
 ```
+kubectl describe services nginx-svc
+```
+
+Output
+
+```
+Name:              nginx-svc
+Namespace:         default
+Labels:            run=nginx
+Annotations:       kubectl.kubernetes.io/last-applied-configuration:
+                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"run":"nginx"},"name":"nginx-svc","nam...
+Selector:          <none>
+Type:              ClusterIP
+IP:                10.100.94.111
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         <none>
+Session Affinity:  None
+Events:            <none>
+```
+
+```
 kubectl get endpoints
 ```
 
@@ -306,6 +339,28 @@ subsets:
 ```
 
 Check Endpoints
+
+```
+kubectl describe services nginx-svc
+```
+
+Output
+
+```
+Name:              nginx-svc
+Namespace:         default
+Labels:            run=nginx
+Annotations:       kubectl.kubernetes.io/last-applied-configuration:
+                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"run":"nginx"},"name":"nginx-svc","nam...
+Selector:          <none>
+Type:              ClusterIP
+IP:                10.100.94.111
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         172.17.0.7:80
+Session Affinity:  None
+Events:            <none>
+```
 
 ```
 kubectl get endpoints
