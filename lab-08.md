@@ -1,8 +1,8 @@
 # Lab 08 - Logging
 
 ```
-kubectl run --dry-run busybox --image=busybox:1.28 \
-  --restart=Never -o yaml > log.yaml
+kubectl run busybox --image=busybox:1.28 \
+  --restart=Never --dry-run -o yaml > log.yaml
 ```
 
 Edit `log.yaml`
@@ -44,6 +44,8 @@ minikube ssh
 ```
 ls /var/log/container
 ```
+
+Tail the log.
 
 ```
 sudo tail /var/log/container/CONTAINER_LOG
