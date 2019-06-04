@@ -73,7 +73,7 @@ pod/nginx created
 ## Generate YAML template with command
 
 ```
-kubectl run nginx --dry-run --image=nginx --restart=Never -o yaml
+kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml
 ```
 
 Output
@@ -101,7 +101,7 @@ status: {}
 __Deploy with YAML__
 
 ```
-kubectl run nginx2 --dry-run --image=nginx --restart=Never -o yaml > pod.yaml
+kubectl run nginx2 --image=nginx --restart=Never --dry-run -o yaml > pod.yaml
 
 kubectl create -f pod.yaml
 ```
@@ -148,6 +148,8 @@ Output
 Forwarding from 127.0.0.1:8080 -> 80
 Forwarding from [::1]:8080 -> 80
 ```
+
+Open browser: http://127.0.0.1:8080/
 
 ## Set the resource require/limit
 
@@ -240,7 +242,7 @@ Output
 NAME      READY     STATUS    RESTARTS   AGE
 nginx     1/1       Running   0          7m
 nginx2    1/1       Running   0          11s
-nginx2    1/1       Running   1         1m
+nginx2    1/1       Running   1          1m
 ```
 
 ## Clear
