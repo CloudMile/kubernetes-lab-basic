@@ -18,15 +18,10 @@ kubectl get replicasets -w
 kubectl get pods -w
 ```
 
-__Update image__
+__Update image and show status__
 
 ```
 kubectl set image deployment nginx nginx=nginx:1.9.2
-```
-
-__Show status__
-
-```
 kubectl rollout status deployment nginx
 ```
 
@@ -88,7 +83,7 @@ kubectl top pods
 ## Create HPA
 
 ```
-kubectl autoscale deployment php-apache --cpu-percent=30 --min=1 --max=10
+kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=5
 ```
 
 ```
@@ -99,7 +94,7 @@ Output
 
 ```
 NAME         REFERENCE               TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
-php-apache   Deployment/php-apache   0%/50%    1         10        4          5m
+php-apache   Deployment/php-apache   0%/50%    1         10        1          1m
 ```
 
 __Load Testing__
@@ -109,7 +104,6 @@ kubectl run -it load-generator --image=busybox /bin/sh
 
 > while true; do wget -q -O- http://php-apache.default.svc.cluster.local; done
 ```
-
 
 ## Clear
 
