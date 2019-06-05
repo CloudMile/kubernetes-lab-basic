@@ -125,10 +125,11 @@ kubectl create configmap dummy-config --from-file=welcome.txt \
   --dry-run -o yaml > configmap.yaml
 ```
 
-Show `configmap.yaml`
+Edit `configmap.yaml`
+
 ```
 apiVersion: v1
-data:
+data: # Change data
   welcome: |
     Hello World!!!
 kind: ConfigMap
