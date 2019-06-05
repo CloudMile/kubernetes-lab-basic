@@ -123,7 +123,7 @@ prometheus:
   prometheusSpec:
     secrets: [etcd-certs]
 kubeEtcd:
-  endpoint: [CHANGE_IT] # change it with `minikube ip`
+  endpoints: [CHANGE_IT] # change it with `minikube ip`
   serviceMonitor:
     scheme: https
     caFile:   /etc/prometheus/secrets/etcd-certs/ca.crt
