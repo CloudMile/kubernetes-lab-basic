@@ -185,8 +185,14 @@ Show pods in current context.
 kubectl get pods
 ```
 
+__Clean__
+
 ```
 kubectl config delete-context mini-system
+```
+
+```
+kubectl config use-context minikube
 ```
 
 ## Kubectx
