@@ -55,14 +55,13 @@ Invoke-WebRequest "https://download.virtualbox.org/virtualbox/6.0.8/VirtualBox-6
 2. Download and install kubectl. Execute:
 
 ```
-Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v1.14.0/bin/windows/amd64/kubectl.exe" -OutFile C:\Windows\system32\kubectl.exe;
+Invoke-WebRequest "https://storage.googleapis.com/kubernetes-release/release/v1.17.2/bin/windows/amd64/kubectl.exe" -OutFile C:\Windows\system32\kubectl.exe;
 ```
 
 3. Download and install [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/). Execute:
 
 ```
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;
-Invoke-WebRequest "https://github.com/kubernetes/minikube/releases/download/v1.0.1/minikube-installer.exe" -OutFile minikube-installer.exe;
+Invoke-WebRequest "https://storage.googleapis.com/minikube/releases/latest/minikube-installer.exe" -OutFile minikube-installer.exe;
 
 .\minikube-installer.exe;
 ```
@@ -70,13 +69,12 @@ Invoke-WebRequest "https://github.com/kubernetes/minikube/releases/download/v1.0
 4. Download and install [Helm](https://helm.sh/docs/using_helm/#installing-helm). Execute:
 
 ```
-$version="helm-v2.14.0-windows-amd64";
+$version="helm-v3.1.0";
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;
-Invoke-WebRequest "https://storage.googleapis.com/kubernetes-helm/$version.zip" -OutFile "$version.zip";
-Expand-Archive -Path ".\$version.zip" -DestinationPath ".\$version";
+Invoke-WebRequest "https://get.helm.sh/$version-windows-amd64.zip" -OutFile C:\$version.zip;
+Expand-Archive -Path C:\$version.zip -DestinationPath C:\$version;
 
-Move-Item -Path ".\$version\windows-amd64\helm.exe" -Destination C:\Windows\system32\helm.exe;
-Move-Item -Path ".\$version\windows-amd64\tiller.exe" -Destination C:\Windows\system32\tiller.exe;
+Move-Item -Path C:\$version\windows-amd64\helm.exe -Destination C:\Windows\system32\helm.exe;
 ```
 
 5. Remove all installation files. Execute:
