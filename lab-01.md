@@ -17,7 +17,7 @@ minikube version
 Output
 
 ```
-minikube version: v1.0.1
+minikube version: v1.7.2
 ```
 
 ## Start Minikube
@@ -29,23 +29,14 @@ minikube start
 Output
 
 ```
-😄  minikube v1.0.1 on darwin (amd64)
-🤹  Downloading Kubernetes v1.14.1 images in the background ...
-💡  Tip: Use 'minikube start -p <name>' to create a new cluster, or 'minikube delete' to delete this one.
-🔄  Restarting existing virtualbox VM for "minikube" ...
-⌛  Waiting for SSH access ...
-📶  "minikube" IP address is 192.168.99.100
-🐳  Configuring Docker as the container runtime ...
-🐳  Version of container runtime is 18.06.3-ce
-⌛  Waiting for image downloads to complete ...
-✨  Preparing Kubernetes environment ...
-🚜  Pulling images required by Kubernetes v1.14.1 ...
-🔄  Relaunching Kubernetes v1.14.1 using kubeadm ...
-⌛  Waiting for pods: apiserver proxy etcd scheduler controller dns
-📯  Updating kube-proxy configuration ...
-🤔  Verifying component health ......
-💗  kubectl is now configured to use "minikube"
-🏄  Done! Thank you for using minikube!
+😄  minikube v1.7.2 on Darwin 10.12.6
+✨  Using the virtualbox driver based on user configuration
+🔥  Creating virtualbox VM (CPUs=2, Memory=2000MB, Disk=20000MB) ...
+🐳  Preparing Kubernetes v1.17.2 on Docker 19.03.5 ...
+🚀  Launching Kubernetes ...
+🌟  Enabling addons: default-storageclass, storage-provisioner
+⌛  Waiting for cluster to come online ...
+🏄  Done! kubectl is now configured to use "minikube"
 ```
 
 ## Show Minikube status
@@ -59,7 +50,7 @@ Output
 host: Running
 kubelet: Running
 apiserver: Running
-kubectl: Correctly Configured: pointing to minikube-vm at 192.168.99.100
+kubeconfig: Configured
 ```
 
 ## Show Minikube Node IP
@@ -71,7 +62,7 @@ minikube ip
 Output
 
 ```
-192.168.99.100
+192.168.99.101
 ```
 
 Ping test
@@ -89,22 +80,28 @@ minikube addons list
 Output
 
 ```
-- addon-manager: enabled
-- dashboard: enabled
-- default-storageclass: enabled
-- efk: disabled
-- freshpod: disabled
-- gvisor: disabled
-- heapster: disabled
-- ingress: disabled
-- logviewer: disabled
-- metrics-server: disabled
-- nvidia-driver-installer: disabled
-- nvidia-gpu-device-plugin: disabled
-- registry: disabled
-- registry-creds: disabled
-- storage-provisioner: enabled
-- storage-provisioner-gluster: disabled
+|-----------------------------|----------|--------------|
+|         ADDON NAME          | PROFILE  |    STATUS    |
+|-----------------------------|----------|--------------|
+| dashboard                   | minikube | disabled     |
+| default-storageclass        | minikube | enabled ✅   |
+| efk                         | minikube | disabled     |
+| freshpod                    | minikube | disabled     |
+| gvisor                      | minikube | disabled     |
+| helm-tiller                 | minikube | disabled     |
+| ingress                     | minikube | disabled     |
+| ingress-dns                 | minikube | disabled     |
+| istio                       | minikube | disabled     |
+| istio-provisioner           | minikube | disabled     |
+| logviewer                   | minikube | disabled     |
+| metrics-server              | minikube | disabled     |
+| nvidia-driver-installer     | minikube | disabled     |
+| nvidia-gpu-device-plugin    | minikube | disabled     |
+| registry                    | minikube | disabled     |
+| registry-creds              | minikube | disabled     |
+| storage-provisioner         | minikube | enabled ✅   |
+| storage-provisioner-gluster | minikube | disabled     |
+|-----------------------------|----------|--------------|
 ```
 
 ## Delete Cluster
@@ -136,8 +133,8 @@ kubectl cluster-info
 Output
 
 ```
-Kubernetes master is running at https://192.168.99.100:8443
-CoreDNS is running at https://192.168.99.100:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+Kubernetes master is running at https://192.168.99.101:8443
+KubeDNS is running at https://192.168.99.101:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 ```
