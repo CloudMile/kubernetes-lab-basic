@@ -21,22 +21,28 @@ minikube addons list
 Output
 
 ```
-- addon-manager: enabled
-- dashboard: enabled
-- default-storageclass: enabled
-- efk: disabled
-- freshpod: disabled
-- gvisor: disabled
-- heapster: disabled
-- ingress: enabled
-- logviewer: disabled
-- metrics-server: disabled
-- nvidia-driver-installer: disabled
-- nvidia-gpu-device-plugin: disabled
-- registry: disabled
-- registry-creds: disabled
-- storage-provisioner: enabled
-- storage-provisioner-gluster: disabled
+|-----------------------------|----------|--------------|
+|         ADDON NAME          | PROFILE  |    STATUS    |
+|-----------------------------|----------|--------------|
+| dashboard                   | minikube | disabled     |
+| default-storageclass        | minikube | enabled ✅   |
+| efk                         | minikube | disabled     |
+| freshpod                    | minikube | disabled     |
+| gvisor                      | minikube | disabled     |
+| helm-tiller                 | minikube | disabled     |
+| ingress                     | minikube | disabled     |
+| ingress-dns                 | minikube | disabled     |
+| istio                       | minikube | disabled     |
+| istio-provisioner           | minikube | disabled     |
+| logviewer                   | minikube | disabled     |
+| metrics-server              | minikube | disabled     |
+| nvidia-driver-installer     | minikube | disabled     |
+| nvidia-gpu-device-plugin    | minikube | disabled     |
+| registry                    | minikube | disabled     |
+| registry-creds              | minikube | disabled     |
+| storage-provisioner         | minikube | enabled ✅   |
+| storage-provisioner-gluster | minikube | disabled     |
+|-----------------------------|----------|--------------|
 ```
 
 ```
@@ -46,7 +52,7 @@ minikube addons enable metrics-server
 Output
 
 ```
-✅  metrics-server was successfully enabled
+🌟  The 'metrics-server' addon is enabled
 ```
 
 Confirm the metrics-server pod is running
@@ -79,7 +85,7 @@ __Reset minikube__
 ```
 minikube stop
 
-minikube start \
+minikube start --memory=4096 \
     --extra-config=kubelet.authentication-token-webhook=true \
     --extra-config=kubelet.authorization-mode=Webhook \
     --extra-config=scheduler.address=0.0.0.0 \
@@ -103,17 +109,6 @@ kubectl create secret generic etcd-certs -nmonitoring \
   --from-literal=client.key="$(kubectl exec kube-apiserver-minikube -nkube-system -- cat /var/lib/minikube/certs/apiserver-etcd-client.key)"
 ```
 
-__Create Service Account for Helm__
-
-```
-kubectl create serviceaccount tiller \
-  --namespace kube-system
-
-kubectl create clusterrolebinding tiller-role-binding \
-  --clusterrole cluster-admin \
-  --serviceaccount=kube-system:tiller
-```
-
 Edit `value.yaml`, remeber change `CHANGE_IT` with the value of `minikube ip`.
 
 This is because the Minikube set the endpoint of etcd as Minikube ip.
@@ -121,9 +116,15 @@ This is because the Minikube set the endpoint of etcd as Minikube ip.
 ```
 prometheus:
   prometheusSpec:
-    secrets: [etcd-certs]
+    secrets:
+      - etcd-certs
+prometheusOperator:
+  createCustomResource: false
+kubeProxy:
+  enabled: false
 kubeEtcd:
-  endpoints: [CHANGE_IT] # change it with `minikube ip`
+  endpoints:
+    - 192.168.99.100 # CHANGE_IT with the value of `minikube ip`
   serviceMonitor:
     scheme: https
     caFile:   /etc/prometheus/secrets/etcd-certs/ca.crt
@@ -134,11 +135,14 @@ kubeEtcd:
 __Install Helm__
 
 ```
-brew install kubernetes-helm
-```
+$version="helm-v3.1.0"
+curl -LO https://get.helm.sh/$version-darwin-amd64.tar.gz
+tar -zxvf $version-darwin-amd64.tar.gz
 
-```
-helm init --service-account tiller
+chmod +x darwin-amd64/helm
+sudo mv darwin-amd64/helm /usr/local/bin/helm
+
+helm repo add stable https //kubernetes-charts.storage.googleapis.com/
 ```
 
 Update Repository
@@ -150,8 +154,8 @@ helm repo update
 Install prometheus-operator
 
 ```
-helm install stable/prometheus-operator \
-  --name prometheus-operator \
+helm install prometheus-operator \
+  stable/prometheus-operator \
   --namespace monitoring \
   --values value.yaml
 ```
@@ -192,10 +196,7 @@ Password: prom-operator
 ## Clear
 
 ```
-helm delete --purge prometheus-operator
-kubectl delete crd prometheuses.monitoring.coreos.com
-kubectl delete crd prometheusrules.monitoring.coreos.com
-kubectl delete crd servicemonitors.monitoring.coreos.com
-kubectl delete crd alertmanagers.monitoring.coreos.com
+helm uninstall prometheus-operator -n monitoring
+kubectl delete crd --all
 kubectl delete namespace monitoring
 ```
