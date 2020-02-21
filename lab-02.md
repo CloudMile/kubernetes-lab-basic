@@ -9,10 +9,11 @@ kubectl get namespaces
 Output
 
 ```
-NAME          STATUS    AGE
-default       Active    3m
-kube-public   Active    2m
-kube-system   Active    3m
+NAME              STATUS   AGE
+default           Active   3m
+kube-node-lease   Active   3m
+kube-public       Active   3m
+kube-system       Active   3m
 ```
 
 __In short__
@@ -42,20 +43,15 @@ kubectl get pods --all-namespaces
 Output
 
 ```
-NAMESPACE     NAME                                       READY   STATUS    RESTARTS   AGE
-kube-system   coredns-78fcdf6894-7c9qm                   1/1     Running   2          3d1h
-kube-system   coredns-78fcdf6894-rd8fw                   1/1     Running   2          3d1h
-kube-system   default-http-backend-ddc5ff66b-lqnvv       1/1     Running   2          3d1h
-kube-system   etcd-minikube                              1/1     Running   1          71m
-kube-system   kube-addon-manager-minikube                1/1     Running   1          71m
-kube-system   kube-apiserver-minikube                    1/1     Running   1          71m
-kube-system   kube-controller-manager-minikube           1/1     Running   1          71m
-kube-system   kube-proxy-zhnq2                           1/1     Running   1          70m
-kube-system   kube-scheduler-minikube                    1/1     Running   1          71m
-kube-system   kubernetes-dashboard-6fcb8b9cbb-8rr7l      1/1     Running   7          3d1h
-kube-system   metrics-server-6c6cc4bbcd-h8sgh            1/1     Running   4          3d1h
-kube-system   nginx-ingress-controller-cc65f44b6-tcg6q   1/1     Running   3          3d1h
-kube-system   storage-provisioner                        1/1     Running   4          3d1h
+NAMESPACE     NAME                               READY   STATUS    RESTARTS   AGE
+kube-system   coredns-6955765f44-7vq44           1/1     Running   1          43h
+kube-system   coredns-6955765f44-crx2q           1/1     Running   1          43h
+kube-system   etcd-minikube                      1/1     Running   0          3m51s
+kube-system   kube-apiserver-minikube            1/1     Running   0          3m51s
+kube-system   kube-controller-manager-minikube   1/1     Running   1          43h
+kube-system   kube-proxy-x49rj                   1/1     Running   1          43h
+kube-system   kube-scheduler-minikube            1/1     Running   1          43h
+kube-system   storage-provisioner                1/1     Running   2          43h
 ```
 
 ## Create a Pod with command
@@ -186,6 +182,12 @@ spec:
 status: {}
 ```
 
+__Deploy with YAML__
+
+```
+kubectl create -f pod.yaml
+```
+
 ```
 kubectl describe pod nginx2
 ```
@@ -221,6 +223,8 @@ spec:
   restartPolicy: OnFailure
 status: {}
 ```
+
+__Apply Change__
 
 ```
 kubectl apply -f pod.yaml
