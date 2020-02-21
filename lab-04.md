@@ -3,7 +3,7 @@
 ## Create a deployment
 
 ```
-kubectl run nginx --image=nginx
+kubectl create deployment nginx --image=nginx --save-config
 ```
 
 ## Create a service for deployment
@@ -41,14 +41,14 @@ Output
 ```
 Name:              nginx
 Namespace:         default
-Labels:            run=nginx
+Labels:            app=nginx
 Annotations:       <none>
-Selector:          run=nginx
+Selector:          app=nginx
 Type:              ClusterIP
-IP:                10.98.135.68
+IP:                10.100.235.182
 Port:              <unset>  80/TCP
 TargetPort:        80/TCP
-Endpoints:         172.17.0.7:80
+Endpoints:         172.17.0.4:80
 Session Affinity:  None
 Events:            <none>
 ```
@@ -60,8 +60,8 @@ kubectl get endpoints
 Output
 ```
 NAME         ENDPOINTS             AGE
-kubernetes   192.168.99.100:8443   19h
-nginx        172.17.0.7:80         6m
+kubernetes   192.168.99.100:8443   44h
+nginx        172.17.0.4:80         66s
 ```
 
 ## Generate YAML template with command
@@ -71,7 +71,7 @@ kubectl expose deployment nginx --port=80 --name=nginx-svc --dry-run -o yaml > s
 ```
 
 ```
-kubectl create -f svc.yaml
+kubectl create -f svc.yaml --save-config
 ```
 
 ## Proxy
@@ -99,7 +99,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    run: nginx
+    app: nginx
   name: nginx-svc
 spec:
   type: NodePort # change here
@@ -108,7 +108,7 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    run: nginx
+    app: nginx
 status:
   loadBalancer: {}
 ```
@@ -123,10 +123,10 @@ kubectl get services
 Output
 
 ```
-NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        19h
-nginx        ClusterIP   10.98.135.68    <none>        80/TCP         15m
-nginx-svc    NodePort    10.107.140.99   <none>        80:32630/TCP   5m
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        44h
+nginx        ClusterIP   10.100.235.182   <none>        80/TCP         3m35s
+nginx-svc    NodePort    10.99.85.18      <none>        80:32031/TCP   80s
 ```
 
 __Test Node port access__
@@ -147,7 +147,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    run: nginx
+    app: nginx
   name: nginx-svc
 spec:
   type: NodePort
@@ -157,7 +157,7 @@ spec:
     targetPort: 80
     nodePort: 32123 # change here
   selector:
-    run: nginx
+    app: nginx
 status:
   loadBalancer: {}
 ```
@@ -172,10 +172,10 @@ kubectl get services
 Output
 
 ```
-NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
-kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        19h
-nginx        ClusterIP   10.98.135.68    <none>        80/TCP         25m
-nginx-svc    NodePort    10.107.140.99   <none>        80:32123/TCP   15m
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        44h
+nginx        ClusterIP   10.100.235.182   <none>        80/TCP         7m39s
+nginx-svc    NodePort    10.99.85.18      <none>        80:32123/TCP   5m24s
 ```
 
 ## FQDN
@@ -198,7 +198,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    run: nginx
+    app: nginx
   name: nginx-svc
 spec:
   clusterIP: None # change it
@@ -207,7 +207,7 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    run: nginx
+    app: nginx
 status:
   loadBalancer: {}
 ```
@@ -223,10 +223,10 @@ kubectl get services
 Output
 
 ```
-NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   10.96.0.1      <none>        443/TCP   19h
-nginx        ClusterIP   10.98.135.68   <none>        80/TCP    48m
-nginx-svc    ClusterIP   None           <none>        80/TCP    6s
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP   44h
+nginx        ClusterIP   10.100.235.182   <none>        80/TCP    10m
+nginx-svc    ClusterIP   None             <none>        80/TCP    1s
 ```
 
 Nslookup
@@ -242,13 +242,13 @@ Server:    10.96.0.10
 Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local
 
 Name:      nginx-svc
-Address 1: 172.17.0.7 172-17-0-7.nginx.default.svc.cluster.local
+Address 1: 172.17.0.4 172-17-0-4.nginx.default.svc.cluster.local
 ```
 
 Test
 
 ```
-kubectl exec busybox -- wget -q -O- 172-17-0-7.nginx.default.svc.cluster.local
+kubectl exec busybox -- wget -q -O- 172-17-0-4.nginx.default.svc.cluster.local
 ```
 
 ## Non-selector Service
@@ -261,7 +261,7 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    run: nginx
+    app: nginx
   name: nginx-svc
 spec:
   ports:
@@ -281,10 +281,10 @@ kubectl get services
 Output
 
 ```
-NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP   19h
-nginx        ClusterIP   10.98.135.68    <none>        80/TCP    1h
-nginx-svc    ClusterIP   10.100.94.111   <none>        80/TCP    4s
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP   44h
+nginx        ClusterIP   10.100.235.182   <none>        80/TCP    13m
+nginx-svc    ClusterIP   None             <none>        80/TCP    0s
 ```
 
 Check Endpoints
@@ -298,12 +298,12 @@ Output
 ```
 Name:              nginx-svc
 Namespace:         default
-Labels:            run=nginx
+Labels:            app=nginx
 Annotations:       kubectl.kubernetes.io/last-applied-configuration:
-                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"run":"nginx"},"name":"nginx-svc","nam...
+                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"app":"nginx"},"name":"nginx-svc","nam...
 Selector:          <none>
 Type:              ClusterIP
-IP:                10.100.94.111
+IP:                None
 Port:              <unset>  80/TCP
 TargetPort:        80/TCP
 Endpoints:         <none>
@@ -319,8 +319,8 @@ Output
 
 ```
 NAME         ENDPOINTS             AGE
-kubernetes   192.168.99.100:8443   19h
-nginx        172.17.0.7:80         1h
+kubernetes   192.168.99.100:8443   44h
+nginx        172.17.0.4:80         13m
 ```
 
 Edit `endpoint.yaml`
@@ -332,10 +332,16 @@ metadata:
   name: nginx-svc
 subsets:
 - addresses:
-  - ip: 172.17.0.7
+  - ip: 172.17.0.4
   ports:
   - port: 80
     protocol: TCP
+```
+
+Create Endpoint
+
+```
+kubectl create -f endpoint.yaml
 ```
 
 Check Endpoints
@@ -349,15 +355,15 @@ Output
 ```
 Name:              nginx-svc
 Namespace:         default
-Labels:            run=nginx
+Labels:            app=nginx
 Annotations:       kubectl.kubernetes.io/last-applied-configuration:
-                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"run":"nginx"},"name":"nginx-svc","nam...
+                     {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"creationTimestamp":null,"labels":{"app":"nginx"},"name":"nginx-svc","nam...
 Selector:          <none>
 Type:              ClusterIP
-IP:                10.100.94.111
+IP:                None
 Port:              <unset>  80/TCP
 TargetPort:        80/TCP
-Endpoints:         172.17.0.7:80
+Endpoints:         172.17.0.4:80
 Session Affinity:  None
 Events:            <none>
 ```
@@ -370,9 +376,9 @@ Output
 
 ```
 NAME         ENDPOINTS             AGE
-kubernetes   192.168.99.100:8443   20h
-nginx        172.17.0.7:80         1h
-nginx-svc    172.17.0.7:80         10s
+kubernetes   192.168.99.100:8443   44h
+nginx        172.17.0.4:80         16m
+nginx-svc    172.17.0.4:80         15s
 ```
 
 ## Clear
