@@ -15,7 +15,7 @@ kubectl get deploy
 ## Create a Deployment with command
 
 ```
-kubectl run nginx --image=nginx
+kubectl create deployment nginx --image=nginx --save-config
 ```
 
 Output
@@ -35,8 +35,8 @@ kubectl get deployments
 Output
 
 ```
-NAME      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-nginx     1         1         1            1           2m
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   1/1     1            1           11s
 ```
 
 __Show the replicasets__
@@ -54,8 +54,8 @@ kubectl get rs
 Output
 
 ```
-NAME               DESIRED   CURRENT   READY     AGE
-nginx-64f497f8fd   1         1         1         2m
+NAME               DESIRED   CURRENT   READY   AGE
+nginx-86c57db685   1         1         1       29s
 ```
 
 __Show the pods__
@@ -67,37 +67,37 @@ kubectl get pods
 Output
 
 ```
-NAME                     READY     STATUS    RESTARTS   AGE
-nginx-64f497f8fd-5d9s7   1/1       Running   0          2m
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-86c57db685-5xzkt   1/1     Running   0          49s
 ```
 
 ## Generate YAML template with command
 
 ```
-kubectl run nginx --image=nginx --dry-run -o yaml
+kubectl create deployment nginx --image=nginx --save-config --dry-run -o yaml
 ```
 
 Output
 
 ```
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    run: nginx
+    app: nginx
   name: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: nginx
+      app: nginx
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: nginx
+        app: nginx
     spec:
       containers:
       - image: nginx
@@ -109,7 +109,7 @@ status: {}
 Save YAML
 
 ```
-kubectl run nginx --image=nginx --dry-run -o yaml > deploy.yaml
+kubectl create deployment nginx --image=nginx --save-config --dry-run -o yaml > deploy.yaml
 ```
 
 ## Force restart container
@@ -117,18 +117,31 @@ kubectl run nginx --image=nginx --dry-run -o yaml > deploy.yaml
 Edit `deploy.yaml`
 
 ```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: nginx
+  name: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: nginx
+      app: nginx
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        run: nginx
+        app: nginx
         version: v0.0.1
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
 ```
 
 __Accept the changes__
