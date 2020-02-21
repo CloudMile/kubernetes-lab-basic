@@ -67,23 +67,23 @@ Annotations:  <none>
 
 Data
 ====
-k3:
-----
-value3
 k1:
 ----
 value1
 k2:
 ----
 value2
+k3:
+----
+value3
 Events:  <none>
 ```
-
-## Create ConfigMaps with file
 
 ```
 kubectl delete configmap dummy-config
 ```
+
+## Create ConfigMaps with file
 
 ```
 echo 'hello world' > welcome.txt
@@ -114,11 +114,11 @@ hello world
 Events:  <none>
 ```
 
-## Generate YAML template with command
-
 ```
 kubectl delete configmap dummy-config
 ```
+
+## Generate YAML template with command
 
 ```
 kubectl create configmap dummy-config --from-file=welcome.txt \
@@ -259,12 +259,12 @@ data:
   foo: YmFy
 kind: Secret
 metadata:
-  creationTimestamp: 2019-03-28T07:59:32Z
+  creationTimestamp: "2020-02-21T09:43:43Z"
   name: dummy-secret
   namespace: default
-  resourceVersion: "41445"
+  resourceVersion: "22855"
   selfLink: /api/v1/namespaces/default/secrets/dummy-secret
-  uid: 6b82ca5c-512f-11e9-908f-080027bb4af8
+  uid: ad30a806-6cf6-4148-a999-5fccf1a04417
 type: Opaque
 ```
 
@@ -324,8 +324,8 @@ Type:         Opaque
 
 Data
 ====
-welcome:  14 bytes
 foo:      3 bytes
+welcome:  14 bytes
 ```
 
 ## Use secret as environment variable
