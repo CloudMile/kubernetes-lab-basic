@@ -1,7 +1,7 @@
 # Lab 09 - Update Version
 
 ```
-kubectl run nginx --image=nginx:1.7.9
+kubectl create deployment nginx --image=nginx:1.7.9 --save-config
 ```
 
 __Open three terminal to watch changes__
@@ -31,18 +31,44 @@ __Show history__
 kubectl rollout history deployment nginx
 ```
 
+__Recorde changes__
+
+```
+kubectl set image deployment nginx nginx=nginx:1.14.0 --record=true
+```
+
+Show change cause
+
+```
+kubectl rollout history deployment nginx
+```
+
 ## Rollback
+
+See image version
 
 ```
 kubectl describe deployment nginx
 ```
+
+```
+kubectl get deployment nginx -ojsonpath="{.spec.template.spec.containers[0].image}"
+```
+
+Rollback to previous version
 
 ```
 kubectl rollout undo deployment nginx
 ```
 
+See current image version
+
 ```
 kubectl describe deployment nginx
+```
+
+```
+kubectl get deployment nginx -ojsonpath="{.spec.template.spec.containers[0].image}"
 ```
 
 ## Update image with yaml
@@ -100,7 +126,7 @@ php-apache   Deployment/php-apache   0%/50%    1         10        1          1m
 __Load Testing__
 
 ```
-kubectl run -it load-generator --image=busybox /bin/sh
+kubectl run -it --rm --restart=Never load-generator --image=busybox /bin/sh
 
 > while true; do wget -q -O- http://php-apache.default.svc.cluster.local; done
 ```
@@ -111,5 +137,4 @@ kubectl run -it load-generator --image=busybox /bin/sh
 kubectl delete deployment php-apache
 kubectl delete service php-apache
 kubectl delete hpa php-apache
-kubectl delete deployment load-generator
 ```
