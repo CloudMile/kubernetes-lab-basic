@@ -31,6 +31,12 @@ spec:
 status: {}
 ```
 
+Apply yaml
+
+```
+kubectl apply -f log.yaml
+```
+
 ```
 kubectl logs -f busybox
 ```
@@ -42,13 +48,13 @@ minikube ssh
 ```
 
 ```
-ls /var/log/container
+ls /var/log/containers
 ```
 
 Tail the log.
 
 ```
-sudo tail /var/log/container/CONTAINER_LOG
+sudo tail /var/log/containers/CONTAINER_LOG
 ```
 
 ```
