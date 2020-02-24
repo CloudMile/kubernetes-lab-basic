@@ -245,3 +245,21 @@ __Field explain__
 ```
 kubectl explain nodes
 ```
+
+----
+
+## Kubernetes Dashboard
+
+Install kubernetes dashboard
+
+```
+minikube addons enable dashboard
+```
+
+Access kubernetes dashboard
+
+```
+minikube dashboard
+```
+
+![](img/lab-01-dashboard.png)
