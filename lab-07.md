@@ -142,7 +142,7 @@ tar -zxvf $version-darwin-amd64.tar.gz
 chmod +x darwin-amd64/helm
 sudo mv darwin-amd64/helm /usr/local/bin/helm
 
-helm repo add stable https //kubernetes-charts.storage.googleapis.com/
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 ```
 
 Update Repository
